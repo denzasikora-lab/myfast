@@ -93,38 +93,6 @@ API → DB (payment + outbox) → Outbox Dispatcher → RabbitMQ → Consumer �
 
 ---
 
-## 📊 Sequence Diagram
-
-Client
-  │
-  │ POST /payments
-  ▼
-API
-  │
-  ├── save payment
-  ├── save outbox event (same tx)
-  ▼
-DB
-  │
-  ▼
-Outbox Dispatcher
-  │
-  ├── read pending events
-  ├── publish to RabbitMQ
-  ▼
-RabbitMQ (payments.new)
-  │
-  ▼
-Consumer
-  │
-  ├── simulate processing (2–5 sec)
-  ├── update payment status
-  ├── send webhook
-  ▼
-Client Webhook
-
----
-
 ## Outbox pattern: гарантированная доставка событий
 
 ### Избжать потери событий между:
